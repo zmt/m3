@@ -28,7 +28,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/integration"
 	"google.golang.org/grpc"
 
 	"github.com/m3db/m3/src/cluster/kv"
@@ -449,17 +448,17 @@ func testOptions() Options {
 		SetEnv("env")
 }
 
-func testNewETCDFn(t *testing.T) (newClientFn, func()) {
-	ecluster := integration.NewClusterV3(t, &integration.ClusterConfig{Size: 1})
-	ec := ecluster.RandClient()
+// func testNewETCDFn(t *testing.T) (newClientFn, func()) {
+// 	ecluster := integration.NewClusterV3(t, &integration.ClusterConfig{Size: 1})
+// 	ec := ecluster.RandClient()
 
-	newFn := func(Cluster) (*clientv3.Client, error) {
-		return ec, nil
-	}
+// 	newFn := func(Cluster) (*clientv3.Client, error) {
+// 		return ec, nil
+// 	}
 
-	closer := func() {
-		ecluster.Terminate(t)
-	}
+// 	closer := func() {
+// 		ecluster.Terminate(t)
+// 	}
 
-	return newFn, closer
-}
+// 	return newFn, closer
+// }

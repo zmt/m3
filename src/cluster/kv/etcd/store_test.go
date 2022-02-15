@@ -33,13 +33,10 @@ import (
 	"github.com/m3db/m3/src/cluster/generated/proto/kvtest"
 	"github.com/m3db/m3/src/cluster/kv"
 	xclock "github.com/m3db/m3/src/x/clock"
-	"github.com/m3db/m3/src/x/retry"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/integration"
 	"golang.org/x/net/context"
 )
 
@@ -1160,50 +1157,50 @@ func genProto(msg string) proto.Message {
 	return &kvtest.Foo{Msg: msg}
 }
 
-func testCluster(t *testing.T) (*integration.ClusterV3, Options, func()) {
-	ecluster := integration.NewClusterV3(t, &integration.ClusterConfig{Size: 1})
-	closer := func() {
-		ecluster.Terminate(t)
-	}
+// func testCluster(t *testing.T) (*integration.ClusterV3, Options, func()) {
+// 	ecluster := integration.NewClusterV3(t, &integration.ClusterConfig{Size: 1})
+// 	closer := func() {
+// 		ecluster.Terminate(t)
+// 	}
 
-	opts := NewOptions().
-		SetWatchChanCheckInterval(100 * time.Millisecond).
-		SetWatchChanResetInterval(200 * time.Millisecond).
-		SetWatchChanInitTimeout(200 * time.Millisecond).
-		SetRequestTimeout(200 * time.Millisecond).
-		SetRetryOptions(retry.NewOptions().SetMaxRetries(1).SetMaxBackoff(0)).
-		SetPrefix("test")
+// 	opts := NewOptions().
+// 		SetWatchChanCheckInterval(100 * time.Millisecond).
+// 		SetWatchChanResetInterval(200 * time.Millisecond).
+// 		SetWatchChanInitTimeout(200 * time.Millisecond).
+// 		SetRequestTimeout(200 * time.Millisecond).
+// 		SetRetryOptions(retry.NewOptions().SetMaxRetries(1).SetMaxBackoff(0)).
+// 		SetPrefix("test")
 
-	return ecluster, opts, closer
-}
+// 	return ecluster, opts, closer
+// }
 
-func testStore(t *testing.T) (*clientv3.Client, Options, func()) {
-	ecluster, opts, closer := testCluster(t)
-	return ecluster.RandClient(), opts, closer
-}
+// func testStore(t *testing.T) (*clientv3.Client, Options, func()) {
+// 	ecluster, opts, closer := testCluster(t)
+// 	return ecluster.RandClient(), opts, closer
+// }
 
-func readCacheJSONAndFilename(dirPath string) (string, []byte, error) {
-	files, err := ioutil.ReadDir(dirPath)
-	if err != nil {
-		return "", nil, err
-	}
-	if len(files) != 1 {
-		return "", nil, fmt.Errorf("expected 1 file, found files: %+v", files)
-	}
-	fileName := files[0].Name()
-	filepath := path.Join(dirPath, fileName)
-	f, err := os.Open(filepath)
-	if err != nil {
-		return "", nil, err
-	}
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		return "", nil, err
-	}
-	return fileName, b, nil
-}
+// func readCacheJSONAndFilename(dirPath string) (string, []byte, error) {
+// 	files, err := ioutil.ReadDir(dirPath)
+// 	if err != nil {
+// 		return "", nil, err
+// 	}
+// 	if len(files) != 1 {
+// 		return "", nil, fmt.Errorf("expected 1 file, found files: %+v", files)
+// 	}
+// 	fileName := files[0].Name()
+// 	filepath := path.Join(dirPath, fileName)
+// 	f, err := os.Open(filepath)
+// 	if err != nil {
+// 		return "", nil, err
+// 	}
+// 	b, err := ioutil.ReadAll(f)
+// 	if err != nil {
+// 		return "", nil, err
+// 	}
+// 	return fileName, b, nil
+// }
 
-func readCacheJSON(dirPath string) ([]byte, error) {
-	_, b, err := readCacheJSONAndFilename(dirPath)
-	return b, err
-}
+// func readCacheJSON(dirPath string) ([]byte, error) {
+// 	_, b, err := readCacheJSONAndFilename(dirPath)
+// 	return b, err
+// }
