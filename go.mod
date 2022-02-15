@@ -74,12 +74,6 @@ require (
 	github.com/uber/tchannel-go v1.20.1
 	github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a
 	github.com/willf/bitset v1.1.10
-
-	// This is 3.4.13. Note: we need to specify the version this way due to the issue
-	// described in https://github.com/etcd-io/etcd/issues/11154 .
-	// Version string was obtained by the method described in
-	// https://github.com/etcd-io/etcd/issues/11154#issuecomment-568587798
-	go.etcd.io/etcd v0.5.0-alpha.5.0.20200824191128-ae9734ed278b
 	go.opentelemetry.io/collector v0.30.1
 	go.opentelemetry.io/otel v1.0.0-RC2
 	go.opentelemetry.io/otel/bridge/opentracing v1.0.0-RC2
@@ -125,9 +119,3 @@ replace github.com/google/flatbuffers => github.com/google/flatbuffers v1.12.1
 
 // Fix legacy import path - https://github.com/uber-go/atomic/pull/60
 replace github.com/uber-go/atomic => github.com/uber-go/atomic v1.4.0
-
-// Pull in https://github.com/etcd-io/bbolt/pull/220, required for go 1.14 compatibility
-//
-// etcd 3.14.13 depends on v1.3.3, but everything before v1.3.5 has unsafe misuses, and fails hard on go 1.14
-// TODO: remove after etcd pulls in the change to a new release on 3.4 branch
-replace go.etcd.io/bbolt => go.etcd.io/bbolt v1.3.5
