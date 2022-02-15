@@ -91,7 +91,7 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	golang.org/x/sys v0.0.0-20210819135213-f52c844e1c1c
 	golang.org/x/tools v0.1.5 // indirect
-	google.golang.org/grpc v1.39.0
+	google.golang.org/grpc v1.40.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/go-playground/validator.v9 v9.29.1
 	gopkg.in/validator.v2 v2.0.0-20160201165114-3e4f037f12a1
