@@ -149,10 +149,10 @@ func NewGRPCClient(
 	scope := instrumentOpts.MetricsScope()
 	interceptorOpts := xgrpc.InterceptorInstrumentOptions{Scope: scope}
 
-	resolver := newStaticResolver(addresses)
-	balancer := grpc.RoundRobin(resolver)
+	// resolver := newStaticResolver(addresses)
+	// balancer := grpc.RoundRobin(resolver)
 	dialOptions := append([]grpc.DialOption{
-		grpc.WithBalancer(balancer),
+		// grpc.WithBalancer(balancer),
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(xgrpc.UnaryClientInterceptor(interceptorOpts)),
 		grpc.WithStreamInterceptor(xgrpc.StreamClientInterceptor(interceptorOpts)),
